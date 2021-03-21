@@ -8,6 +8,9 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# Mutations
+Dir["app/mutations/additional_filters/*.rb"].each {|f| load f, false }
+
 module OpenPlaces
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.

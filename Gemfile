@@ -4,20 +4,19 @@ source 'https://rubygems.org'
 
 ruby '2.7.1'
 
+gem 'bootsnap', '>= 1.4.4', require: false
+gem 'grape'
 gem 'mutations'
+gem 'pg'
 gem 'puma', '~> 5.0'
 gem 'rails', '~> 6.1.0'
 gem 'sass-rails', '>= 6'
-gem 'sqlite3', '~> 1.4'
 gem 'turbolinks', '~> 5'
 gem 'webpacker', '~> 5.0'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'bootsnap', '>= 1.4.4', require: false
-gem 'guard-rspec', require: false
-gem 'jbuilder', '~> 2.7'
 
 group :development, :test do
   gem 'byebug'
+  gem 'guard-rspec', require: false
 end
 
 group :test do
