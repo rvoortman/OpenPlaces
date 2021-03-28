@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe PointOfInterests::CreatePointOfInterest do
-  include_context :point_of_interest_context
-
   let(:valid_params) { { title: "test", latitude: 0.0, longitude: 0.0 } }
 
   it 'creates a point of interest' do
