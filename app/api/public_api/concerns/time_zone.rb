@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Api
+module PublicApi
   module Concerns
     module TimeZone
       extend ActiveSupport::Concern

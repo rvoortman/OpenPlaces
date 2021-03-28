@@ -8,12 +8,19 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-# Mutations
 Dir["app/mutations/additional_filters/*.rb"].each {|f| load f, false }
 
 module OpenPlaces
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
+
+    config.time_zone = "UTC"
+
+    config.paths.add "app/api", glob: "**/*.rb"
+
+    # Mutations
+
+    config.active_record.schema_format = :sql
   end
 end

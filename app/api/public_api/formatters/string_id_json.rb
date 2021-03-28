@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
-module Api
+module PublicApi
   module Formatters
     class StringIdJson
       MAX_SAFE_INTEGER = 2**53 - 1
 
       def call(object, env)
+        puts
         Grape::Formatter::Json.call(serialize(object), env)
       end
 
@@ -21,7 +22,7 @@ module Api
         elsif object.kind_of?(Hash)
           object.transform_values {|value| serialize(value) }
         elsif object.respond_to?(:serializable_hash)
-          serialize(object.serializable_hash)
+          object.serializable_hash
         else
           object
         end
