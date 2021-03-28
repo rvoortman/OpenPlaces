@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module Api
+module PublicApi
   module Concerns
-    class ErrorHandling
+    module ErrorHandling
       extend ActiveSupport::Concern
 
       included do
         rescue_from :all do |e|
-          raise e if Rails.test?
+          raise e if Rails.env.test?
 
           error!(error: "Something went terribly wrong!")
         end
@@ -39,7 +39,7 @@ module Api
           error!({ error: message, symbolic: e.errors.symbolic }, status)
         end
 
-        rescue_from Api::Concerns::TimeZone::InvalidTimezone do |error|
+        rescue_from PublicApi::Concerns::TimeZone::InvalidTimezone do |error|
           error!(
             { error: "A time zone was provided, but it couldn't be recognized: #{error.time_zone}. Make sure you provide a time zone from the tz database." }, 400
           )

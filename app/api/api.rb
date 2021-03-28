@@ -1,15 +1,13 @@
 # frozen_string_literal: true
 
 class Api < Grape::API
-  insert_before Grape::Middleware::Error
-
   version 'v1', using: :path
-  formatter :json, Api::Formatters::SafeIntegerJson.new
+  formatter :json, PublicApi::Formatters::StringIdJson.new
   default_format :json
   cascade false
 
-  include Api::Concerns::TimeZone
-  include Api::Concerns::ErrorHandling
+  include PublicApi::Concerns::TimeZone
+  include PublicApi::Concerns::ErrorHandling
 
   before do
     I18n.locale = :en
@@ -23,6 +21,6 @@ class Api < Grape::API
     header "Access-Control-Allow-Headers", "Authorization,Content-Type"
   end
 
-  mount Api::Routes::PointOfInterests
-  # mount Api::Routes::Categories
+  mount PublicApi::Routes::PointOfInterests
+  mount PublicApi::Routes::Categories
 end
