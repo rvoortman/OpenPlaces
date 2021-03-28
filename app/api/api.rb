@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api < Grape::API
   insert_before Grape::Middleware::Error
 
@@ -12,7 +14,7 @@ class Api < Grape::API
   before do
     I18n.locale = :en
 
-    error!("Invalid content type", 406) unless [:json, :xml].include?(env['api.format'])
+    error!("Invalid content type", 406) unless %i[json xml].include?(env['api.format'])
   end
 
   after do

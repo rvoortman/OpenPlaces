@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 require 'securerandom'
 
 RSpec.describe Mutations::UUIDFilter do
   let(:filter) { described_class.new }
-   it 'parses uuids as as string' do
+
+  it 'parses uuids as as string' do
     uuid = SecureRandom.uuid.to_s
     filtered, errors = filter.filter(uuid)
 

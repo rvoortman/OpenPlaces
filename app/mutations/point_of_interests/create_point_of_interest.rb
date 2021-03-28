@@ -1,4 +1,3 @@
-
 # frozen_string_literal: true
 
 module PointOfInterests
@@ -11,10 +10,10 @@ module PointOfInterests
 
     def execute
       PointOfInterest.create!({
-        title: title,
-        longitude: longitude,
-        latitude: latitude
-      })
+                                title: title,
+                                longitude: longitude,
+                                latitude: latitude
+                              })
     end
   end
 end

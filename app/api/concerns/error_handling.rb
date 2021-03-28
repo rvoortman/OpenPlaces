@@ -1,53 +1,57 @@
 # frozen_string_literal: true
 
-module Api::Concerns::ErrorHandling
-  extend ActiveSupport::Concern
+module Api
+  module Concerns
+    class ErrorHandling
+      extend ActiveSupport::Concern
 
-  included do
-    rescue_from :all do |e|
-      raise e if Rails.test?
+      included do
+        rescue_from :all do |e|
+          raise e if Rails.test?
 
-      Appsignal.set_error(e)
+          error!(error: "Something went terribly wrong!")
+        end
 
-      error!(error: "Something went terribly wrong. The Moneybird team was notified of the error.")
-    end
+        rescue_from Grape::Exceptions::ValidationErrors do |e|
+          error!({ error: e.message }, e.status)
+        end
 
-    rescue_from Grape::Exceptions::ValidationErrors do |e|
-      error!({ error: e.message }, e.status)
-    end
+        rescue_from Grape::Exceptions::MethodNotAllowed do |e|
+          error!({ error: "The request method is not allowed for this endpoint." }, 405)
+        end
 
-    rescue_from Grape::Exceptions::MethodNotAllowed do |e|
-      error!({ error: "The request method is not allowed for this endpoint." }, 405)
-    end
+        rescue_from Grape::Exceptions::InvalidMessageBody do |e|
+          error!({ error: "The request body couldn't be parsed because it's invalid." }, 400)
+        end
 
-    rescue_from Grape::Exceptions::InvalidMessageBody do |e|
-      error!({ error: "The request body couldn't be parsed because it's invalid." }, 400)
-    end
+        rescue_from Mutations::ValidationException do |e|
+          status = case e.errors.symbolic.values.uniq
+                   when [:not_found] then 404
+                   when [:invalid_grant] then 401
+                   when [:limit_reached] then 402
+                   else 400
+                   end
 
-    rescue_from Mutations::ValidationException do |e|
-      status = case e.errors.symbolic.values.uniq
-               when [:not_found] then 404
-               when [:invalid_grant] then 401
-               when [:limit_reached] then 402
-               else 400
-               end
+          message = e.to_s
+          # replace 'xx is invalid' message in 404 case with better fitting message
+          message = "record not found" if status == 404 && message =~ /invalid/i
 
-      message = e.to_s
-      # replace 'xx is invalid' message in 404 case with better fitting message
-      message = "record not found" if status == 404 && message =~ /invalid/i
+          error!({ error: message, symbolic: e.errors.symbolic }, status)
+        end
 
-      error!({ error: message, symbolic: e.errors.symbolic }, status)
-    end
+        rescue_from Api::Concerns::TimeZone::InvalidTimezone do |error|
+          error!(
+            { error: "A time zone was provided, but it couldn't be recognized: #{error.time_zone}. Make sure you provide a time zone from the tz database." }, 400
+          )
+        end
 
-    rescue_from Api::Concerns::TimeZone::InvalidTimezone do |error|
-      error!({ error: "A time zone was provided, but it couldn't be recognized: #{error.time_zone}. Make sure you provide a time zone from the tz database." }, 400)
-    end
+        helpers do
+          def present(instance, with: nil)
+            return super unless instance.try(:errors)&.any? || instance.try(:invalid?)
 
-    helpers do
-      def present(instance, with: nil)
-        return super unless instance.try(:errors)&.any? || instance.try(:invalid?)
-
-        error!({ error: instance.errors }, 422)
+            error!({ error: instance.errors }, 422)
+          end
+        end
       end
     end
   end
