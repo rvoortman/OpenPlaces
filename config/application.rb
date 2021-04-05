@@ -19,8 +19,6 @@ module OpenPlaces
 
     config.paths.add "app/api", glob: "**/*.rb"
 
-    # Mutations
-
     config.active_record.schema_format = :sql
   end
 end
