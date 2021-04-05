@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 ruby '2.7.1'
 
 gem 'bootsnap', '>= 1.4.4', require: false
-# TODO: https://github.com/ruby-grape/grape/issues/2156
+gem 'devise'
 gem 'grape'
 gem 'grape-entity'
 gem 'mutations'
@@ -19,6 +19,7 @@ gem 'webpacker', '~> 5.0'
 group :development, :test do
   gem 'byebug'
   gem 'guard-rspec', require: false
+  gem 'mailcatcher'
 end
 
 group :test do

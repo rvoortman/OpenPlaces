@@ -2,10 +2,11 @@
 
 module PublicApi
   module Entities
-    class Category < Grape::Entity
+    class PointOfInterest < Grape::Entity
       expose :id
       expose :title
-      expose :color
+      expose :latitude
+      expose :longitude
       expose :created_at
       expose :updated_at
     end

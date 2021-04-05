@@ -8,6 +8,24 @@ RSpec.describe PublicApi::Routes::Categories do
 
   let!(:category) { create_category }
 
+  it "accepts xml as content type" do
+    request(:get, "categories.xml")
+
+    expect(response).to have_status(200)
+  end
+
+  it "accepts json as content type" do
+    request(:get, "categories.json")
+
+    expect(response).to have_status(200)
+  end
+
+  it "returns a 406 when the content type is not known" do
+    request(:get, "categories.bla")
+
+    expect(response).to have_status(406)
+  end
+
   context "GET /categories.json" do
     it "returns a list of category" do
       request(:get, "categories.json")
@@ -25,6 +43,12 @@ RSpec.describe PublicApi::Routes::Categories do
       expect(response).to have_status(200)
       expect(parsed_response).to be_a_representation_of(Category)
     end
+
+    it "returns a 404 when the category could not be found" do
+      request(:get, "categories/1234.json")
+
+      expect(response).to have_status(404)
+    end
   end
 
   context "DELETE /categories/:id.json" do
@@ -34,6 +58,12 @@ RSpec.describe PublicApi::Routes::Categories do
       expect(response).to have_status(200)
       expect(parsed_response).to be_a_representation_of(Category)
     end
+
+    it "returns a 404 when the category could not be found" do
+      request(:delete, "categories/1234.json")
+
+      expect(response).to have_status(404)
+    end
   end
 
   context "POST /categories.json" do
@@ -42,6 +72,13 @@ RSpec.describe PublicApi::Routes::Categories do
 
       expect(response).to have_status(201)
       expect(parsed_response).to be_a_representation_of(Category)
+    end
+
+    it "returns a 400 when a parameter is missing" do
+      request(:post, "categories.json", params: {color: "#000000"})
+
+      expect(response).to have_status(400)
+      expect(parsed_response["error"]).to eq("title is missing")
     end
   end
 end

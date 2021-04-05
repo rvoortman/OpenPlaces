@@ -61,6 +61,7 @@ GEM
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
     ast (2.4.2)
+    bcrypt (3.1.16)
     bootsnap (1.7.3)
       msgpack (~> 1.0)
     builder (3.2.4)
@@ -68,10 +69,17 @@ GEM
     coderay (1.1.3)
     concurrent-ruby (1.1.8)
     crass (1.0.6)
+    daemons (1.3.1)
     database_cleaner-active_record (2.0.0)
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
+    devise (4.7.3)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 4.1.0)
+      responders
+      warden (~> 1.2.3)
     diff-lcs (1.4.4)
     dry-configurable (0.12.1)
       concurrent-ruby (~> 1.0)
@@ -92,6 +100,7 @@ GEM
       dry-inflector (~> 0.1, >= 0.1.2)
       dry-logic (~> 1.0, >= 1.0.2)
     erubi (1.10.0)
+    eventmachine (1.2.7)
     ffi (1.15.0)
     formatador (0.2.5)
     globalid (0.4.2)
@@ -120,8 +129,12 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
+    haml (5.2.1)
+      temple (>= 0.8.0)
+      tilt
     i18n (1.8.9)
       concurrent-ruby (~> 1.0)
+    json (2.5.1)
     listen (3.5.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -131,6 +144,16 @@ GEM
     lumberjack (1.2.8)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
+    mailcatcher (0.2.4)
+      eventmachine
+      haml
+      i18n
+      json
+      mail
+      sinatra
+      skinny (>= 0.1.2)
+      sqlite3-ruby
+      thin
     marcel (1.0.0)
     method_source (1.0.0)
     mini_mime (1.0.3)
@@ -152,6 +175,7 @@ GEM
     notiffany (0.1.3)
       nenv (~> 0.1)
       shellany (~> 0.0)
+    orm_adapter (0.5.0)
     parallel (1.20.1)
     parser (3.0.0.0)
       ast (~> 2.4.1)
@@ -167,6 +191,8 @@ GEM
       rack (>= 0.4)
     rack-mini-profiler (2.3.1)
       rack (>= 1.2.0)
+    rack-protection (2.1.0)
+      rack
     rack-proxy (0.6.5)
       rack
     rack-test (1.1.0)
@@ -203,6 +229,9 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     regexp_parser (2.1.1)
+    responders (3.0.1)
+      actionpack (>= 5.0)
+      railties (>= 5.0)
     rexml (3.2.4)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
@@ -264,6 +293,14 @@ GEM
     shellany (0.0.1)
     shoulda-matchers (4.5.1)
       activesupport (>= 4.2.0)
+    sinatra (2.1.0)
+      mustermann (~> 1.0)
+      rack (~> 2.2)
+      rack-protection (= 2.1.0)
+      tilt (~> 2.0)
+    skinny (0.2.2)
+      eventmachine (~> 1.0)
+      thin
     spring (2.1.1)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
@@ -274,6 +311,14 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    sqlite3 (1.4.2)
+    sqlite3-ruby (1.3.3)
+      sqlite3 (>= 1.3.3)
+    temple (0.8.2)
+    thin (1.8.0)
+      daemons (~> 1.0, >= 1.0.9)
+      eventmachine (~> 1.0, >= 1.0.4)
+      rack (>= 1, < 3)
     thor (1.1.0)
     tilt (2.0.10)
     turbolinks (5.2.1)
@@ -282,6 +327,8 @@ GEM
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.0.0)
+    warden (1.2.9)
+      rack (>= 2.0.9)
     webpacker (5.2.1)
       activesupport (>= 5.2)
       rack-proxy (>= 0.6.1)
@@ -299,10 +346,12 @@ DEPENDENCIES
   bootsnap (>= 1.4.4)
   byebug
   database_cleaner-active_record
+  devise
   grape
   grape-entity
   guard-rspec
   listen (~> 3.3)
+  mailcatcher
   mutations
   pg
   puma (~> 5.0)

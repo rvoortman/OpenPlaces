@@ -32,17 +32,6 @@ module PublicApi
           present ::Categories::CreateCategory.run!(title: params[:title], color: params[:color]), with: PublicApi::Entities::Category
         end
       end
-
-
-      #   desc 'Create a new category'
-      #   params do
-      #     requires :title, type: String
-      #     requires :color, type: String
-      #   end
-      #   post do
-      #     Categories::CreateCategory.run!(id: id)
-      #   end
-      end
     end
-  # end
+  end
 end
