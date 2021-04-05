@@ -12,17 +12,20 @@
 
 ActiveRecord::Schema.define(version: 2021_03_21_190329) do
 
-  create_table "categories", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "color", null: false
     t.string "title", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "point_of_interests", force: :cascade do |t|
+  create_table "point_of_interests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
-    t.decimal "longitude", null: false
     t.decimal "latitude", null: false
+    t.decimal "longitude", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

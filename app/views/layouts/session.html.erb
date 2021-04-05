@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= html_escape(@page_title) + raw(" &middot; ") if @page_title %>OpenPlaces</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <% flash.each do |type, msg| %>
+      <div class="banner <%= type %>">
+        <%= msg %>
+      </div>
+    <% end %>
+    <div class="container container-center">
+      <%= yield %>
+    </div>
+  </body>
+</html>
