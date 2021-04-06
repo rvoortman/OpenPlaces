@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
-class Users::ConfirmationsController < Devise::ConfirmationsController
-  layout "session"
+module Users
+  class ConfirmationsController < Devise::ConfirmationsController
+    layout "session"
+  end
 end

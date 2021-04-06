@@ -18,9 +18,7 @@ module PointOfInterests
     private
 
     def point_of_interest
-      @point_of_interest ||= PointOfInterest.find(id)
-    rescue ActiveRecord::RecordNotFound
-      nil
+      @point_of_interest ||= PointOfInterests::FindPointOfInterest.run!(id: id)
     end
   end
 end
