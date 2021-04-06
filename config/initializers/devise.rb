@@ -43,7 +43,6 @@ Devise.setup do |config|
   # The same considerations mentioned for authentication_keys also apply to request_keys.
   # config.request_keys = []
 
-
   config.case_insensitive_keys = [:email]
   config.strip_whitespace_keys = [:email]
 
@@ -100,14 +99,13 @@ Devise.setup do |config|
 
   config.expire_all_remember_me_on_sign_out = true
 
-
   # Options to be passed to the created cookie. For instance, you can set
   # secure: true in order to force SSL only cookies.
   # config.rememberable_options = {}
 
   config.password_length = 8..128
   config.email_regexp = /\A[^@\s]+@[^@\s]+\z/
-  
+
   config.timeout_in = 60.minutes
   config.lock_strategy = :failed_attempts
   config.unlock_keys = [:email]
@@ -182,9 +180,6 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
 
-  # ==> Turbolinks configuration
-  # If your app is using Turbolinks, Turbolinks::Controller needs to be included to make redirection work correctly:
-  #
   ActiveSupport.on_load(:devise_failure_app) do
     include Turbolinks::Controller
   end

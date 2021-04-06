@@ -18,9 +18,7 @@ module Categories
     private
 
     def category
-      @category ||= Category.find(id)
-    rescue ActiveRecord::RecordNotFound
-      nil
+      @category ||= Categories::FindCategory.run!(id: id)
     end
   end
 end

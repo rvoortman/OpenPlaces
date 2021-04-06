@@ -37,7 +37,7 @@ RSpec.shared_context :api_context do
     end
 
     failure_message do |actual|
-      msg = "expected request to have status #{expected}, got status #{actual.status} (#{actual.message})"
+      "expected request to have status #{expected}, got #{actual.status} (#{actual.message})"
     end
   end
 end

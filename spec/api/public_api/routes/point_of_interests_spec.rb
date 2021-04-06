@@ -68,7 +68,8 @@ RSpec.describe PublicApi::Routes::PointOfInterests do
 
   context "POST /point_of_interests.json" do
     it "creates a point of interest" do
-      request(:post, "point_of_interests.json", params: {title: "test", longitude: 0.0, latitude: 0.0})
+      request(:post, "point_of_interests.json",
+              params: {title: "test", longitude: 0.0, latitude: 0.0})
 
       expect(response).to have_status(201)
       expect(parsed_response).to be_a_representation_of(PointOfInterest)

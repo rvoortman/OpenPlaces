@@ -21,7 +21,7 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 
 RSpec.configure do |config|
-  config.include RSpec::Rails::RequestExampleGroup, type: :request, file_path: /spec\/api/
+  config.include RSpec::Rails::RequestExampleGroup, type: :request, file_path: %r{spec/api}
 
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
