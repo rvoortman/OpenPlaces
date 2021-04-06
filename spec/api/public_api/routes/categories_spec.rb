@@ -1,30 +1,15 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'shared_examples_for_api_routes'
 
 RSpec.describe PublicApi::Routes::Categories do
   include_context :api_context
   include_context :category_context
 
+  it_behaves_like 'an api route', 'categories'
+
   let!(:category) { create_category }
-
-  it "accepts xml as content type" do
-    request(:get, "categories.xml")
-
-    expect(response).to have_status(200)
-  end
-
-  it "accepts json as content type" do
-    request(:get, "categories.json")
-
-    expect(response).to have_status(200)
-  end
-
-  it "returns a 406 when the content type is not known" do
-    request(:get, "categories.bla")
-
-    expect(response).to have_status(406)
-  end
 
   context "GET /categories.json" do
     it "returns a list of category" do

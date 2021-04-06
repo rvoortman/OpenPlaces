@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Api < Grape::API
+  require 'doorkeeper/grape/helpers'
   version 'v1', using: :path
   formatter :json, PublicApi::Formatters::StringIdJson.new
   default_format :json

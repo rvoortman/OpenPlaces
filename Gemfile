@@ -6,6 +6,7 @@ ruby '2.7.1'
 
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'devise'
+gem 'doorkeeper'
 gem 'grape'
 gem 'grape-entity'
 gem 'mutations'

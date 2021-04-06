@@ -3,7 +3,17 @@
 require 'rails_helper'
 
 RSpec.shared_context :api_context do
-  def request(method, path, params: nil, headers: nil, as: nil)
+  include_context :user_context
+
+  let(:doorkeeper_application) { Doorkeeper::Application.create!(name: "Test Application", redirect_uri: "https://foo.bar") }
+  let(:user) { create_user }
+  let(:access_token) { Doorkeeper::AccessToken.create!(application_id: doorkeeper_application.id, resource_owner_id: user.id, scopes: :public) }
+
+  def request(method, path, params: nil, headers: nil, as: nil, authenticated: true)
+    if authenticated
+      params ||= {}
+      params[:access_token] = access_token.token
+    end
     full_path = "/api/v1/#{path}"
     send(method, full_path, params: params, headers: headers, as: as)
   end

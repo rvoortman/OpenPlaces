@@ -1,30 +1,15 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'shared_examples_for_api_routes'
 
 RSpec.describe PublicApi::Routes::PointOfInterests do
   include_context :api_context
   include_context :point_of_interest_context
 
+  it_behaves_like 'an api route', 'point_of_interests'
+
   let!(:point_of_interest) { create_point_of_interest }
-
-  it "accepts xml as content type" do
-    request(:get, "point_of_interests.xml")
-
-    expect(response).to have_status(200)
-  end
-
-  it "accepts json as content type" do
-    request(:get, "point_of_interests.json")
-
-    expect(response).to have_status(200)
-  end
-
-  it "returns a 406 when the content type is not known" do
-    request(:get, "point_of_interests.bla")
-
-    expect(response).to have_status(406)
-  end
 
   context "GET /point_of_interests.json" do
     it "returns a list of point of interest" do

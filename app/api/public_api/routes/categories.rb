@@ -1,8 +1,16 @@
 # frozen_string_literal: true
 
+require 'doorkeeper/grape/helpers'
+
 module PublicApi
   module Routes
     class Categories < Grape::API
+      helpers Doorkeeper::Grape::Helpers
+
+      before do
+        doorkeeper_authorize!
+      end
+
       resources :categories do
         desc 'List all categories'
         get do
