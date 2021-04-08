@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   mount Api => '/api'
 
   resources :category
+  resources :point_of_interest
 end

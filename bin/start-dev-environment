@@ -1,0 +1,6 @@
+#!/bin/bash
+echo "Starting Docker..."
+docker-compose up -d
+
+echo "Starting webserver.."
+forego start
