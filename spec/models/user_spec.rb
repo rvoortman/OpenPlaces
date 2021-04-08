@@ -6,7 +6,13 @@ RSpec.describe User, type: :model do
   include_context :user_context
   let(:user) { create_user }
 
+  it { is_expected.to have_many(:access_grants) }
+  it { is_expected.to have_many(:access_tokens) }
+  it { is_expected.to have_many(:categories) }
+  it { is_expected.to have_many(:maps) }
+  
   it { is_expected.to validate_presence_of(:email) }
+  it { is_expected.to validate_confirmation_of(:password) }
 
   it "is a valid user" do
     expect(user.errors.size).to eq(0)
