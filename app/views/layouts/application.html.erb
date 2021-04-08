@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title><%= html_escape(@page_title) + raw(" &middot; ") if @page_title %>OpenPlaces</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -11,8 +11,9 @@
   </head>
 
   <body>
-    <div class="container">
+    <%= render "menu" %>
+    <main>
       <%= yield %>
-    </div>
+    </main>
   </body>
 </html>

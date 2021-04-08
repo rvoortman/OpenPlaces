@@ -6,4 +6,14 @@ class User < ApplicationRecord
 
   validates :email, presence: true, format: { with: /\A[^@\s]+@[^@\s]+\z/ }
   validates :password, confirmation: true, length: { in: 8..128 }
+
+  has_many :access_grants,
+    class_name: 'Doorkeeper::AccessGrant',
+    foreign_key: :resource_owner_id,
+    dependent: :delete_all
+
+  has_many :access_tokens,
+    class_name: 'Doorkeeper::AccessToken',
+    foreign_key: :resource_owner_id,
+    dependent: :delete_all
 end

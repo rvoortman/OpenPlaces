@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  use_doorkeeper
   root to: "category#index"
 
   devise_for :users, controllers: {
@@ -11,4 +12,5 @@ Rails.application.routes.draw do
   mount Api => '/api'
 
   resources :category
+  resources :point_of_interest
 end

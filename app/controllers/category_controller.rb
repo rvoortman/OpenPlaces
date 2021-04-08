@@ -5,5 +5,6 @@ class CategoryController < ApplicationController
 
   def index
     @page_title = "Categories"
+    @categories = Categories::ListCategories.run!
   end
 end
