@@ -34,6 +34,32 @@ CREATE TABLE public.categories (
     color character varying NOT NULL,
     title character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    user_id uuid
+);
+
+
+--
+-- Name: map_users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.map_users (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    user_id uuid,
+    map_id uuid,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: maps; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.maps (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    title character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
 
@@ -148,6 +174,19 @@ ALTER SEQUENCE public.oauth_applications_id_seq OWNED BY public.oauth_applicatio
 
 
 --
+-- Name: point_of_interest_categories; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.point_of_interest_categories (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    category_id uuid,
+    point_of_interest_id uuid,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
 -- Name: point_of_interests; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -157,7 +196,8 @@ CREATE TABLE public.point_of_interests (
     latitude numeric NOT NULL,
     longitude numeric NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    map_id uuid
 );
 
 
@@ -229,6 +269,22 @@ ALTER TABLE ONLY public.categories
 
 
 --
+-- Name: map_users map_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.map_users
+    ADD CONSTRAINT map_users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: maps maps_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.maps
+    ADD CONSTRAINT maps_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: oauth_access_grants oauth_access_grants_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -253,6 +309,14 @@ ALTER TABLE ONLY public.oauth_applications
 
 
 --
+-- Name: point_of_interest_categories point_of_interest_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.point_of_interest_categories
+    ADD CONSTRAINT point_of_interest_categories_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: point_of_interests point_of_interests_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -274,6 +338,27 @@ ALTER TABLE ONLY public.schema_migrations
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_categories_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_categories_on_user_id ON public.categories USING btree (user_id);
+
+
+--
+-- Name: index_map_users_on_map_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_map_users_on_map_id ON public.map_users USING btree (map_id);
+
+
+--
+-- Name: index_map_users_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_map_users_on_user_id ON public.map_users USING btree (user_id);
 
 
 --
@@ -333,6 +418,27 @@ CREATE UNIQUE INDEX index_oauth_applications_on_uid ON public.oauth_applications
 
 
 --
+-- Name: index_point_of_interest_categories_on_category_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_point_of_interest_categories_on_category_id ON public.point_of_interest_categories USING btree (category_id);
+
+
+--
+-- Name: index_point_of_interest_categories_on_point_of_interest_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_point_of_interest_categories_on_point_of_interest_id ON public.point_of_interest_categories USING btree (point_of_interest_id);
+
+
+--
+-- Name: index_point_of_interests_on_map_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_point_of_interests_on_map_id ON public.point_of_interests USING btree (map_id);
+
+
+--
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -372,6 +478,11 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210321181626'),
 ('20210321190329'),
 ('20210330200807'),
-('20210406173825');
+('20210406173825'),
+('20210408145626'),
+('20210408152201'),
+('20210408152229'),
+('20210408153448'),
+('20210408153827');
 
 

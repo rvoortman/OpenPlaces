@@ -16,4 +16,8 @@ class User < ApplicationRecord
     class_name: 'Doorkeeper::AccessToken',
     foreign_key: :resource_owner_id,
     dependent: :delete_all
+
+  has_many :categories
+  has_many :map_users
+  has_many :maps, through: :map_users
 end

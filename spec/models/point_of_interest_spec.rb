@@ -11,6 +11,7 @@ RSpec.describe PointOfInterest, type: :model do
   it { is_expected.to validate_presence_of(:longitude) }
   it { is_expected.to validate_numericality_of(:latitude) }
   it { is_expected.to validate_numericality_of(:longitude) }
+  it { is_expected.to have_many(:categories) }
 
   describe "#longitude" do
     it "can't be smaller than -180" do
