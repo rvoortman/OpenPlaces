@@ -37,7 +37,7 @@ module PublicApi
           requires :color, type: String
         end
         post do
-          present ::Categories::CreateCategory.run!(title: params[:title], color: params[:color]), with: PublicApi::Entities::Category
+          present ::Categories::CreateCategory.run!(user: @current_user, title: params[:title], color: params[:color]), with: PublicApi::Entities::Category
         end
       end
     end

@@ -5,10 +5,12 @@ module Categories
     required do
       string :title
       string :color
+      model :user
     end
 
     def execute
       Category.create!({
+                         user: user,
                          title: title,
                          color: color
                        })

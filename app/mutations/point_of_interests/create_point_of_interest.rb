@@ -8,11 +8,20 @@ module PointOfInterests
       float :latitude
     end
 
+    optional do
+      array :categories, class: Category, empty: true
+    end
+
+    def validate
+
+    end
+
     def execute
       PointOfInterest.create!({
                                 title: title,
                                 longitude: longitude,
-                                latitude: latitude
+                                latitude: latitude,
+                                categories: categories || []
                               })
     end
   end

@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.shared_context :user_context do
+  let(:user) { create_user }
+
   def create_user(options={})
     Users::CreateUser.run!(
       email: options[:email] || "test@example.org",
