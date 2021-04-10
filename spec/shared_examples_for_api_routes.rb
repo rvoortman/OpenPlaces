@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.shared_examples "an api route" do |route|
   it "throws a 401 when there is no token" do
     request(:get, "#{route}.xml")

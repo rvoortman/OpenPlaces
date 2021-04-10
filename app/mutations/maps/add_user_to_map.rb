@@ -8,7 +8,10 @@ module Maps
     end
 
     def validate
-      add_error(:user, :already_exists, "User is already part of the map") if map_user_already_exist?
+      if map_user_already_exist?
+        add_error(:user, :already_exists,
+                  "User is already part of the map")
+      end
     end
 
     def execute

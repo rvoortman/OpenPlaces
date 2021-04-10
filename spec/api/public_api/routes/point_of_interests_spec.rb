@@ -8,10 +8,10 @@ RSpec.describe PublicApi::Routes::PointOfInterests do
   include_context :map_context
   include_context :point_of_interest_context
 
-  it_behaves_like 'an api route', 'point_of_interests'
-
-  let!(:point_of_interest) { create_point_of_interest }
   let(:map) { create_map }
+  let!(:point_of_interest) { create_point_of_interest }
+
+  it_behaves_like 'an api route', 'point_of_interests'
 
   context "GET /point_of_interests.json" do
     it "returns a list of point of interest" do
@@ -63,7 +63,8 @@ RSpec.describe PublicApi::Routes::PointOfInterests do
     end
 
     it "returns a 400 when a parameter is missing" do
-      request(:post, "point_of_interests.json", params: {title: "test", longitude: 0.0, map_id: map.id})
+      request(:post, "point_of_interests.json",
+              params: {title: "test", longitude: 0.0, map_id: map.id})
 
       expect(response).to have_status(400)
       expect(parsed_response["error"]).to eq("latitude is missing")

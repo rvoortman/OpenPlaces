@@ -13,7 +13,7 @@ RSpec.describe Maps::ListMaps do
 
   it 'does not return maps from other users' do
     map2 = create_map
-    
+
     expect(described_class.run!(user: map.users.first)).not_to include([map2])
   end
 end

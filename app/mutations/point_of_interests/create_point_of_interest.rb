@@ -13,10 +13,6 @@ module PointOfInterests
       array :categories, class: Category, empty: true
     end
 
-    def validate
-
-    end
-
     def execute
       PointOfInterest.create!({
                                 title: title,

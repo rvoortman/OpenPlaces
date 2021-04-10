@@ -7,9 +7,9 @@ RSpec.describe PublicApi::Routes::Categories do
   include_context :api_context
   include_context :category_context
 
-  it_behaves_like 'an api route', 'categories'
-
   let!(:category) { create_category }
+
+  it_behaves_like 'an api route', 'categories'
 
   context "GET /categories.json" do
     it "returns a list of category" do
