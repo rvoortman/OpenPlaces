@@ -7,12 +7,13 @@ RSpec.describe Categories::ListCategories do
 
   let(:category) { create_category }
 
-  it 'returns an empty array when there are no categories' do
-    expect(described_class.run!).to eq([])
+  it 'returns all the categories that belongs to an user' do
+    expect(described_class.run!(user: category.user)).to eq([category])
   end
 
-  it 'returns all the categories' do
-    category = create_category
-    expect(described_class.run!).to eq([category])
+  it 'does not return categoriees from other users' do
+    category2 = create_category
+
+    expect(described_class.run!(user: category.user)).not_to include([category2])
   end
 end

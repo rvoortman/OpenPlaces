@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module Categories
-  class ListCategories < Mutations::Command
+module Maps
+  class ListMaps < Mutations::Command
     required do
       model :user
     end
 
     def execute
-      user.categories
+      user.maps
     end
   end
 end

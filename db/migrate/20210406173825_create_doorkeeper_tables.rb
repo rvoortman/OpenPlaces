@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class CreateDoorkeeperTables < ActiveRecord::Migration[6.1]
   def change
-    create_table :oauth_applications do |t|
+    create_table :oauth_applications, id: :uuid do |t|
       t.string  :name,         null: false
       t.string  :uid,          null: false
       t.string  :secret,       null: false
@@ -12,9 +14,9 @@ class CreateDoorkeeperTables < ActiveRecord::Migration[6.1]
 
     add_index :oauth_applications, :uid, unique: true
 
-    create_table :oauth_access_grants do |t|
-      t.references :resource_owner,  null: false
-      t.references :application,     null: false
+    create_table :oauth_access_grants, id: :uuid do |t|
+      t.references :resource_owner,  null: false, type: :uuid
+      t.references :application,     null: false, type: :uuid
       t.string   :token,             null: false
       t.integer  :expires_in,        null: false
       t.text     :redirect_uri,      null: false
@@ -30,16 +32,16 @@ class CreateDoorkeeperTables < ActiveRecord::Migration[6.1]
       column: :application_id
     )
 
-    create_table :oauth_access_tokens do |t|
-      t.references :resource_owner, index: true
-      t.references :application
-      
-      t.string   :token,                  null: false
+    create_table :oauth_access_tokens, id: :uuid do |t|
+      t.references :resource_owner, index: true, type: :uuid
+      t.references :application, type: :uuid
+
+      t.string   :token, null: false
 
       t.string   :refresh_token
       t.integer  :expires_in
       t.datetime :revoked_at
-      t.datetime :created_at,             null: false
+      t.datetime :created_at, null: false
       t.string   :scopes
 
       # If there is a previous_refresh_token column,

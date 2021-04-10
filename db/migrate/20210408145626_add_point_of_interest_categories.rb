@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddPointOfInterestCategories < ActiveRecord::Migration[6.1]
   def change
     create_table :point_of_interest_categories, id: :uuid do |t|

@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe Categories::FindCategory do
-  include_context :category_context
+RSpec.describe Maps::FindMap do
+  include_context :map_context
 
-  let(:category) { create_category }
+  let(:map) { create_map }
 
-  it 'returns the category' do
-    expect(described_class.run!(id: category.id)).to eq(category)
+  it 'returns the map' do
+    expect(described_class.run!(id: map.id)).to eq(map)
   end
 
   it 'throws a validation error if id is not an uuid' do
@@ -20,6 +20,6 @@ RSpec.describe Categories::FindCategory do
   it 'throws a validation error if id is not found' do
     expect do
       described_class.run!(id: SecureRandom.uuid.to_s)
-    end.to raise_error(Mutations::ValidationException, /Couldn't find category/)
+    end.to raise_error(Mutations::ValidationException, /Couldn't find map/)
   end
 end

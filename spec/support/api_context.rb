@@ -5,9 +5,14 @@ require 'rails_helper'
 RSpec.shared_context :api_context do
   include_context :user_context
 
-  let(:doorkeeper_application) { Doorkeeper::Application.create!(name: "Test Application", redirect_uri: "https://foo.bar") }
+  let(:doorkeeper_application) do
+    Doorkeeper::Application.create!(name: "Test Application", redirect_uri: "https://foo.bar")
+  end
   let(:user) { create_user }
-  let(:access_token) { Doorkeeper::AccessToken.create!(application_id: doorkeeper_application.id, resource_owner_id: user.id, scopes: :public) }
+  let(:access_token) do
+    Doorkeeper::AccessToken.create!(application_id: doorkeeper_application.id,
+                                    resource_owner_id: user.id, scopes: :public)
+  end
 
   def request(method, path, params: nil, headers: nil, as: nil, authenticated: true)
     if authenticated

@@ -69,9 +69,9 @@ CREATE TABLE public.maps (
 --
 
 CREATE TABLE public.oauth_access_grants (
-    id bigint NOT NULL,
-    resource_owner_id bigint NOT NULL,
-    application_id bigint NOT NULL,
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    resource_owner_id uuid NOT NULL,
+    application_id uuid NOT NULL,
     token character varying NOT NULL,
     expires_in integer NOT NULL,
     redirect_uri text NOT NULL,
@@ -82,32 +82,13 @@ CREATE TABLE public.oauth_access_grants (
 
 
 --
--- Name: oauth_access_grants_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.oauth_access_grants_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: oauth_access_grants_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.oauth_access_grants_id_seq OWNED BY public.oauth_access_grants.id;
-
-
---
 -- Name: oauth_access_tokens; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.oauth_access_tokens (
-    id bigint NOT NULL,
-    resource_owner_id bigint,
-    application_id bigint,
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    resource_owner_id uuid,
+    application_id uuid,
     token character varying NOT NULL,
     refresh_token character varying,
     expires_in integer,
@@ -119,30 +100,11 @@ CREATE TABLE public.oauth_access_tokens (
 
 
 --
--- Name: oauth_access_tokens_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.oauth_access_tokens_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: oauth_access_tokens_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.oauth_access_tokens_id_seq OWNED BY public.oauth_access_tokens.id;
-
-
---
 -- Name: oauth_applications; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.oauth_applications (
-    id bigint NOT NULL,
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
     name character varying NOT NULL,
     uid character varying NOT NULL,
     secret character varying NOT NULL,
@@ -152,25 +114,6 @@ CREATE TABLE public.oauth_applications (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
-
-
---
--- Name: oauth_applications_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.oauth_applications_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: oauth_applications_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.oauth_applications_id_seq OWNED BY public.oauth_applications.id;
 
 
 --
@@ -229,27 +172,6 @@ CREATE TABLE public.users (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
-
-
---
--- Name: oauth_access_grants id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.oauth_access_grants ALTER COLUMN id SET DEFAULT nextval('public.oauth_access_grants_id_seq'::regclass);
-
-
---
--- Name: oauth_access_tokens id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.oauth_access_tokens ALTER COLUMN id SET DEFAULT nextval('public.oauth_access_tokens_id_seq'::regclass);
-
-
---
--- Name: oauth_applications id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.oauth_applications ALTER COLUMN id SET DEFAULT nextval('public.oauth_applications_id_seq'::regclass);
 
 
 --
@@ -352,6 +274,13 @@ CREATE INDEX index_categories_on_user_id ON public.categories USING btree (user_
 --
 
 CREATE INDEX index_map_users_on_map_id ON public.map_users USING btree (map_id);
+
+
+--
+-- Name: index_map_users_on_map_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_map_users_on_map_id_and_user_id ON public.map_users USING btree (map_id, user_id);
 
 
 --
@@ -483,6 +412,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210408152201'),
 ('20210408152229'),
 ('20210408153448'),
-('20210408153827');
+('20210408153827'),
+('20210410183351');
 
 

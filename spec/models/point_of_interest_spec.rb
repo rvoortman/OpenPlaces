@@ -6,6 +6,7 @@ RSpec.describe PointOfInterest, type: :model do
   include_context :point_of_interest_context
   let(:point_of_interest) { create_point_of_interest }
 
+  it { is_expected.to belong_to(:map) }
   it { is_expected.to validate_presence_of(:title) }
   it { is_expected.to validate_presence_of(:latitude) }
   it { is_expected.to validate_presence_of(:longitude) }

@@ -6,13 +6,20 @@ module PointOfInterests
       string :title
       float :longitude
       float :latitude
+      model :map
+    end
+
+    optional do
+      array :categories, class: Category, empty: true
     end
 
     def execute
       PointOfInterest.create!({
                                 title: title,
                                 longitude: longitude,
-                                latitude: latitude
+                                latitude: latitude,
+                                categories: categories || [],
+                                map: map
                               })
     end
   end

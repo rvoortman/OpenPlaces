@@ -14,6 +14,16 @@ class Api < Grape::API
     I18n.locale = :en
 
     error!("Invalid content type", 406) unless %i[json xml].include?(env['api.format'])
+    if params["access_token"]
+      token = ::Doorkeeper::AccessToken.by_token(params["access_token"])
+
+      raise(InvalidAccessTokenError, "access token invalid") if token.blank?
+      raise(InvalidAccessTokenError, "access token expired") if token.expired?
+      raise(InvalidAccessTokenError, "access token revoked") if token.revoked?
+
+      #TODO: Use mutation
+      @current_user = User.find(token.resource_owner_id)
+    end
   end
 
   after do

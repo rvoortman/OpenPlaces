@@ -14,7 +14,7 @@ module PublicApi
       resources :categories do
         desc 'List all categories'
         get do
-          present ::Categories::ListCategories.run!, with: PublicApi::Entities::Category
+          present ::Categories::ListCategories.run!(user: @current_user), with: PublicApi::Entities::Category
         end
 
         desc 'Get a single category'
@@ -37,7 +37,7 @@ module PublicApi
           requires :color, type: String
         end
         post do
-          present ::Categories::CreateCategory.run!(title: params[:title], color: params[:color]), with: PublicApi::Entities::Category
+          present ::Categories::CreateCategory.run!(user: @current_user, title: params[:title], color: params[:color]), with: PublicApi::Entities::Category
         end
       end
     end
