@@ -21,8 +21,7 @@ jobs:
         ports: ["192.168.99.100:5432:5432"]
         env:
           POSTGRES_HOST_AUTH_METHOD: trust
-        command: [
-          "postgres",
+        options: [
           "-c", "max_connections=1000",
           "-c", "synchronous_commit=off",
           "-c", "fsync=off",
