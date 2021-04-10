@@ -26,8 +26,6 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-        volumes:
-          - ./config/database/pg_hba.conf:/usr/local/share/postgresql/pg_hba.conf
     runs-on: ubuntu-latest
     strategy:
       matrix:
