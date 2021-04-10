@@ -37,14 +37,21 @@ jobs:
         ruby-version: '2.7.1'
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
+    - name: Setup database
+      env:
+        POSTGRES_HOST: 127.0.0.1
+        PGUSER: postgres
+        RAILS_ENV: test
+      run: bin/reset_database
+
     - name: Run specs
       env:
         POSTGRES_HOST: 127.0.0.1
         PGUSER: postgres
         RAILS_ENV: test
-      run: |
-           bin/reset_database && \
-           bundle exec rspec
+      run: bundle exec rspec
 
     - name: Rubocop checks
       uses: gimenete/rubocop-action@1.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
