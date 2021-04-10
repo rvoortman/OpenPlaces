@@ -6,6 +6,7 @@ module PointOfInterests
       string :title
       float :longitude
       float :latitude
+      model :map
     end
 
     optional do
@@ -21,7 +22,8 @@ module PointOfInterests
                                 title: title,
                                 longitude: longitude,
                                 latitude: latitude,
-                                categories: categories || []
+                                categories: categories || [],
+                                map: map
                               })
     end
   end

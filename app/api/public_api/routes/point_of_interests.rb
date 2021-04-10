@@ -28,9 +28,11 @@ module PublicApi
           requires :title, type: String
           requires :latitude, type: Float
           requires :longitude, type: Float
+          requires :map_id, type: String
         end
         post do
-          present ::PointOfInterests::CreatePointOfInterest.run!(title: params[:title], latitude: params[:latitude], longitude: params[:longitude]), with: PublicApi::Entities::PointOfInterest
+          map = Maps::FindMap.run!(id: params[:map_id])
+          present ::PointOfInterests::CreatePointOfInterest.run!(map: map, title: params[:title], latitude: params[:latitude], longitude: params[:longitude]), with: PublicApi::Entities::PointOfInterest
         end
       end
     end

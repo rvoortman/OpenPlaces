@@ -3,7 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe PointOfInterests::CreatePointOfInterest do
-  let(:valid_params) { { title: "test", latitude: 0.0, longitude: 0.0 } }
+  include_context :map_context
+
+  let(:map) { create_map }
+  let(:valid_params) { { title: "test", latitude: 0.0, longitude: 0.0, map: map } }
 
   it 'creates a point of interest' do
     expect do

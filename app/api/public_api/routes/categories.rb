@@ -14,7 +14,7 @@ module PublicApi
       resources :categories do
         desc 'List all categories'
         get do
-          present ::Categories::ListCategories.run!, with: PublicApi::Entities::Category
+          present ::Categories::ListCategories.run!(user: @current_user), with: PublicApi::Entities::Category
         end
 
         desc 'Get a single category'

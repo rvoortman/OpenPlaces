@@ -277,6 +277,13 @@ CREATE INDEX index_map_users_on_map_id ON public.map_users USING btree (map_id);
 
 
 --
+-- Name: index_map_users_on_map_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_map_users_on_map_id_and_user_id ON public.map_users USING btree (map_id, user_id);
+
+
+--
 -- Name: index_map_users_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -405,6 +412,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210408152201'),
 ('20210408152229'),
 ('20210408153448'),
-('20210408153827');
+('20210408153827'),
+('20210410183351');
 
 
