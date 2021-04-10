@@ -32,18 +32,16 @@ jobs:
     steps:
     - name: Checkout the repository
       uses: actions/checkout@v2
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby-version }}
-        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: Run specs
       env:
         POSTGRES_HOST: 127.0.0.1
         PGUSER: postgres
         RAILS_ENV: test
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
       run: bin/reset_database && \
-           gem install bundler && \
-           bundle exec rspec
+          bundle exec rspec
     - name: Rubocop checks
       uses: gimenete/rubocop-action@1.0
