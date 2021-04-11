@@ -162,7 +162,7 @@ RSpec/ExampleLength:
 RSpec/SharedExamples:
   Enabled: false
 
-Capybara/FeatureMethods:
+RSpec/Capybara:
   Enabled: false
 
 Style/AndOr:

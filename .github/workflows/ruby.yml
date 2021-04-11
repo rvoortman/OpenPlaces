@@ -1,0 +1,55 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will download a prebuilt Ruby version, install dependencies and run tests with Rake
+# For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
+
+name: Ruby
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      db:
+        image: postgres:13.2-alpine
+        ports: ["5432:5432"]
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '2.7.1'
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+    - name: Setup database
+      env:
+        POSTGRES_HOST: 127.0.0.1
+        PGUSER: postgres
+        RAILS_ENV: test
+      run: bin/reset_database
+
+    - name: Run specs
+      env:
+        POSTGRES_HOST: 127.0.0.1
+        PGUSER: postgres
+        RAILS_ENV: test
+      run: bundle exec rspec
+
+    - name: Brakeman security scanner
+      run: bundle exec brakeman
