@@ -58,4 +58,5 @@ You can contribute
 - by spreading the love for OpenPlaces on social media
 
 You can also help financially by following me on patreon:
+
 [![Patreon](https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Patreon_logo.svg/240px-Patreon_logo.svg.png)](https://www.patreon.com/OpenPlaces)
