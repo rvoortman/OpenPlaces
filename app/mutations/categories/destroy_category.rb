@@ -4,6 +4,7 @@ module Categories
   class DestroyCategory < Mutations::Command
     required do
       uuid :id
+      model :user
     end
 
     def validate
@@ -18,7 +19,7 @@ module Categories
     private
 
     def category
-      @category ||= Categories::FindCategory.run!(id: id)
+      @category ||= Categories::FindCategory.run!(id: id, user: user)
     end
   end
 end

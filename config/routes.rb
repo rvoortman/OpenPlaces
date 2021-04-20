@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   use_doorkeeper
-  root to: "category#index"
+  root to: "categories#index"
 
   devise_for :users, controllers: {
     passwords: 'users/passwords',
@@ -11,6 +11,6 @@ Rails.application.routes.draw do
   }
   mount Api => '/api'
 
-  resources :category
+  resources :categories
   resources :point_of_interest
 end

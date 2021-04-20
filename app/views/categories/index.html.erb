@@ -1,0 +1,22 @@
+<% if @categories.empty? %>
+  <%= render(EmptyStateComponent.new(missing_element: "category", add_link: new_category_path)) %>
+<% else %>
+<nav>
+  <a href="<%= new_category_path %>">Add category</a>
+</nav>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Color Hexadecimal</th>
+      <th>Color</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render(CategoryComponent.with_collection(@categories)) %>
+  </tbody>
+</table>
+<% end %>
