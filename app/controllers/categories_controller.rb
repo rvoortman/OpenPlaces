@@ -36,12 +36,22 @@ class CategoriesController < ApplicationController
   end
 
   def update
-    @category = Categories::FindCategory.run!(params_with_user(id: params.require(:id)))
+    params.require(:id)
+    params.require(:category).permit(:title, :color)
+    puts params_with_user(params_with_user(params.require(:category).permit!))
+    @category = Categories::UpdateCategory.run!(params_with_user(params.permit!))
+
+    if @category.valid?
+      redirect_to action: 'index'
+    else
+      respond_with(@category)
+    end
   end
 
   private
 
   def params_with_user(parameters)
+    puts parameters.to_h.inspect
     parameters.to_h.merge(user: current_user)
   end
 end

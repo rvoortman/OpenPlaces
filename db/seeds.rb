@@ -1,4 +1,6 @@
 # frozen_string_literal: true
 
-Users::CreateUser.run!(email: "test@example.org", password: "testtest",
+user = Users::CreateUser.run!(email: "test@example.org", password: "testtest",
                        password_confirmation: "testtest")
+
+Categories::CreateCategory.run!(user: user, title: "Test", color: "#123456")
