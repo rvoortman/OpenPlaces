@@ -15,7 +15,7 @@ class CategoriesController < ApplicationController
   end
 
   def create
-    @category = Categories::CreateCategory.run!(params_with_user(params.require(:category).permit!))
+    @category = Categories::CreateCategory.run!(category_params.merge(user: current_user))
 
     if @category.persisted?
       redirect_to action: 'index'
@@ -25,18 +25,18 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    @category = Categories::DestroyCategory.run!(params_with_user(id: params.require(:id)))
+    @category = Categories::DestroyCategory.run!(user: current_user, id: id_param)
 
     redirect_to action: 'index'
   end
 
   def edit
     @page_title = "Edit Category"
-    @category = Categories::FindCategory.run!(params_with_user(id: params.require(:id)))
+    @category = Categories::FindCategory.run!(user: current_user, id: id_param)
   end
 
   def update
-    @category = Categories::UpdateCategory.run!(params_with_user(params.permit!))
+    @category = Categories::UpdateCategory.run!(category: category_params, user: current_user, id: id_param)
 
     if @category.valid?
       redirect_to action: 'index'
@@ -47,7 +47,11 @@ class CategoriesController < ApplicationController
 
   private
 
-  def params_with_user(parameters)
-    parameters.to_h.merge(user: current_user)
+  def id_param
+    params.require(:id)
+  end
+
+  def category_params
+    params.require(:category).permit(:title, :color)
   end
 end
