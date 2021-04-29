@@ -20,14 +20,14 @@ module PublicApi
         desc 'Get a single category'
         route_param :id do
           get do
-            present ::Categories::FindCategory.run!(id: params[:id]), with: PublicApi::Entities::Category
+            present ::Categories::FindCategory.run!(id: params[:id], user: @current_user), with: PublicApi::Entities::Category
           end
         end
 
         desc 'Destroys the category'
         route_param :id do
           delete do
-            present ::Categories::DestroyCategory.run!(id: params[:id]), with: PublicApi::Entities::Category
+            present ::Categories::DestroyCategory.run!(id: params[:id], user: @current_user), with: PublicApi::Entities::Category
           end
         end
 

@@ -4,9 +4,6 @@ module Categories
   class UpdateCategory < Mutations::Command
     required do
       uuid :id
-    end
-
-    optional do
       model :user
       hash :category do
         optional do

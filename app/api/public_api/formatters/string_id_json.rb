@@ -6,7 +6,6 @@ module PublicApi
       MAX_SAFE_INTEGER = 2**53 - 1
 
       def call(object, env)
-        puts
         Grape::Formatter::Json.call(serialize(object), env)
       end
 
