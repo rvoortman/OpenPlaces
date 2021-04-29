@@ -14,21 +14,21 @@ RSpec.describe Categories::CreateCategory do
     end.to change(Category, :count).by(1)
   end
 
-  it 'throws a validation error if user is missing' do
-    expect do
-      described_class.run!(valid_params.except!(:user))
-    end.to raise_error(Mutations::ValidationException, /User is required/)
+  it 'does not save if user is missing' do
+    category = described_class.run!(valid_params.except!(:user))
+
+    expect(category).not_to be_persisted
   end
 
-  it 'throws a validation error if title is missing' do
-    expect do
-      described_class.run!(valid_params.except!(:title))
-    end.to raise_error(Mutations::ValidationException, /Title is required/)
+  it 'does not save if title is missing' do
+    category = described_class.run!(valid_params.except!(:title))
+
+    expect(category).not_to be_persisted
   end
 
-  it 'throws a validation error if latitude is missing' do
-    expect do
-      described_class.run!(valid_params.except!(:color))
-    end.to raise_error(Mutations::ValidationException, /Color is required/)
+  it 'does not save if color is missing' do
+    category = described_class.run!(valid_params.except!(:color))
+
+    expect(category).not_to be_persisted
   end
 end

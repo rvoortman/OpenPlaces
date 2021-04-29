@@ -9,6 +9,34 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Name: pgcrypto; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pgcrypto; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
+
+
+--
+-- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
+
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -30,7 +58,7 @@ CREATE TABLE public.ar_internal_metadata (
 --
 
 CREATE TABLE public.categories (
-    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
     color character varying NOT NULL,
     title character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
@@ -44,7 +72,7 @@ CREATE TABLE public.categories (
 --
 
 CREATE TABLE public.map_users (
-    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
     user_id uuid,
     map_id uuid,
     created_at timestamp(6) without time zone NOT NULL,
@@ -57,7 +85,7 @@ CREATE TABLE public.map_users (
 --
 
 CREATE TABLE public.maps (
-    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
     title character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
@@ -69,7 +97,7 @@ CREATE TABLE public.maps (
 --
 
 CREATE TABLE public.oauth_access_grants (
-    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
     resource_owner_id uuid NOT NULL,
     application_id uuid NOT NULL,
     token character varying NOT NULL,
@@ -86,7 +114,7 @@ CREATE TABLE public.oauth_access_grants (
 --
 
 CREATE TABLE public.oauth_access_tokens (
-    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
     resource_owner_id uuid,
     application_id uuid,
     token character varying NOT NULL,
@@ -104,7 +132,7 @@ CREATE TABLE public.oauth_access_tokens (
 --
 
 CREATE TABLE public.oauth_applications (
-    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
     name character varying NOT NULL,
     uid character varying NOT NULL,
     secret character varying NOT NULL,
@@ -121,7 +149,7 @@ CREATE TABLE public.oauth_applications (
 --
 
 CREATE TABLE public.point_of_interest_categories (
-    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
     category_id uuid,
     point_of_interest_id uuid,
     created_at timestamp(6) without time zone NOT NULL,
@@ -134,7 +162,7 @@ CREATE TABLE public.point_of_interest_categories (
 --
 
 CREATE TABLE public.point_of_interests (
-    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
     title character varying NOT NULL,
     latitude numeric NOT NULL,
     longitude numeric NOT NULL,
@@ -158,7 +186,7 @@ CREATE TABLE public.schema_migrations (
 --
 
 CREATE TABLE public.users (
-    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
     email character varying DEFAULT ''::character varying NOT NULL,
     encrypted_password character varying DEFAULT ''::character varying NOT NULL,
     reset_password_token character varying,
@@ -404,6 +432,7 @@ ALTER TABLE ONLY public.oauth_access_grants
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('0'),
 ('20210321181626'),
 ('20210321190329'),
 ('20210330200807'),

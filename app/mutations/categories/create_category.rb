@@ -2,18 +2,21 @@
 
 module Categories
   class CreateCategory < Mutations::Command
-    required do
-      string :title
-      string :color
+    optional do
+      string :title, empty: true
+      string :color, empty: true
       model :user
     end
 
     def execute
-      Category.create!({
-                         user: user,
-                         title: title,
-                         color: color
-                       })
+      category = Category.new(
+                    user: user,
+                    title: title,
+                    color: color
+                  )
+      category.save
+
+      category
     end
   end
 end

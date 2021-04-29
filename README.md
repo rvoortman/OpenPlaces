@@ -22,7 +22,7 @@ Feel free to contribute to this project by forking this repository and opening a
 ## Installation
 ### Prequisities
 OpenPlaces uses Ruby on Rails as it's framework. The used database is Postgres. Therefore you need to have at least the following installed:
-- Ruby 2.7.1 or newer
+- Ruby 2.7.3
 - Postgres 13.x
 - Docker
 - Forego/Foreman

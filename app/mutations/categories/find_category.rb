@@ -4,10 +4,12 @@ module Categories
   class FindCategory < Mutations::Command
     required do
       uuid :id
+      model :user
     end
 
     def validate
-      add_error(:id, :not_found, "Couldn't find category") unless category
+      return add_error(:id, :not_found, "Couldn't find category") unless category
+      add_error(:user, :unauthorized, "This category does not belong to this user") if user.id != category.user.id
     end
 
     def execute
